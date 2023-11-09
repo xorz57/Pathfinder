@@ -2,6 +2,7 @@ import pygame
 import threading
 
 
+from config import BOARD_ROWS, BOARD_COLS, TILE_WIDTH, TILE_HEIGHT
 from algorithm import astar, bfs, dfs
 from entities.board import Board
 from entities.grid import Grid
@@ -9,8 +10,8 @@ from entities.grid import Grid
 
 class Pathfinder:
     def __init__(self):
-        self.board = Board(16, 16)
-        self.grid = Grid(16, 16)
+        self.board = Board(BOARD_ROWS, BOARD_COLS)
+        self.grid = Grid(BOARD_ROWS, BOARD_COLS)
         self.start = None
         self.finish = None
 
@@ -18,7 +19,7 @@ class Pathfinder:
         if event.type == pygame.KEYDOWN:
             match event.key:
                 case pygame.K_ESCAPE:
-                    self.board = Board(16, 16)
+                    self.board = Board(BOARD_ROWS, BOARD_COLS)
                     self.start = None
                     self.finish = None
                 case pygame.K_SPACE:
@@ -32,18 +33,18 @@ class Pathfinder:
     def update(self):
         if pygame.mouse.get_pressed()[0]:
             x, y = pygame.mouse.get_pos()
-            x = max(0, min(16 - 1, x // 32))
-            y = max(0, min(16 - 1, y // 32))
+            x = max(0, min(BOARD_COLS - 1, x // TILE_WIDTH))
+            y = max(0, min(BOARD_ROWS - 1, y // TILE_HEIGHT))
             self._handle_lmb(x, y)
         if pygame.mouse.get_pressed()[1]:
             x, y = pygame.mouse.get_pos()
-            x = max(0, min(16 - 1, x // 32))
-            y = max(0, min(16 - 1, y // 32))
+            x = max(0, min(BOARD_COLS - 1, x // TILE_WIDTH))
+            y = max(0, min(BOARD_ROWS - 1, y // TILE_HEIGHT))
             self._handle_mmb(x, y)
         if pygame.mouse.get_pressed()[2]:
             x, y = pygame.mouse.get_pos()
-            x = max(0, min(16 - 1, x // 32))
-            y = max(0, min(16 - 1, y // 32))
+            x = max(0, min(BOARD_COLS - 1, x // TILE_WIDTH))
+            y = max(0, min(BOARD_ROWS - 1, y // TILE_HEIGHT))
             self._handle_rmb(x, y)
 
     def render(self, screen):
