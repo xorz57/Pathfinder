@@ -1,9 +1,11 @@
 import pygame
 
+from config import WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE
 from screens.pathfinder import Pathfinder
 
 pygame.init()
-screen = pygame.display.set_mode((16 * 32, 16 * 32))
+screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+pygame.display.set_caption(WINDOW_TITLE)
 
 clock = pygame.time.Clock()
 running = True
