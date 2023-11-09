@@ -4,15 +4,15 @@ import threading
 
 from algorithm import astar, bfs, dfs
 from entities.board import Board
+from entities.grid import Grid
 
 
 class Pathfinder:
     def __init__(self):
         self.board = Board(16, 16)
+        self.grid = Grid(16, 16)
         self.start = None
         self.finish = None
-        self.grid = True
-        self.info = False
 
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
@@ -21,10 +21,6 @@ class Pathfinder:
                     self.board = Board(16, 16)
                     self.start = None
                     self.finish = None
-                case pygame.K_F11:
-                    self.grid = not self.grid
-                case pygame.K_F12:
-                    self.info = not self.info
                 case pygame.K_SPACE:
                     if self.start != None and self.finish != None:
                         t = threading.Thread(
@@ -52,15 +48,7 @@ class Pathfinder:
 
     def render(self, screen):
         self.board.draw(screen)
-        if self.grid:
-            for y in range(16):
-                spy = (0, y * 32)
-                epy = (16 * 32, y * 32)
-                pygame.draw.line(screen, (82, 82, 82), spy, epy)
-            for x in range(16):
-                spx = (x * 32, 0)
-                epx = (x * 32, 16 * 32)
-                pygame.draw.line(screen, (82, 82, 82), spx, epx)
+        self.grid.draw(screen)
 
     def _handle_mb1(self, x, y):
         tile = self.board.tiles[y][x]
