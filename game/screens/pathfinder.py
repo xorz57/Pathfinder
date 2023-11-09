@@ -34,23 +34,23 @@ class Pathfinder:
             x, y = pygame.mouse.get_pos()
             x = max(0, min(16 - 1, x // 32))
             y = max(0, min(16 - 1, y // 32))
-            self._handle_mb1(x, y)
+            self._handle_lmb(x, y)
         if pygame.mouse.get_pressed()[1]:
             x, y = pygame.mouse.get_pos()
             x = max(0, min(16 - 1, x // 32))
             y = max(0, min(16 - 1, y // 32))
-            self._handle_mb3(x, y)
+            self._handle_mmb(x, y)
         if pygame.mouse.get_pressed()[2]:
             x, y = pygame.mouse.get_pos()
             x = max(0, min(16 - 1, x // 32))
             y = max(0, min(16 - 1, y // 32))
-            self._handle_mb2(x, y)
+            self._handle_rmb(x, y)
 
     def render(self, screen):
         self.board.draw(screen)
         self.grid.draw(screen)
 
-    def _handle_mb1(self, x, y):
+    def _handle_lmb(self, x, y):
         tile = self.board.tiles[y][x]
         if tile == self.start:
             self.start = None
@@ -58,7 +58,7 @@ class Pathfinder:
             self.finish = None
         tile.state = "wall"
 
-    def _handle_mb3(self, x, y):
+    def _handle_mmb(self, x, y):
         tile = self.board.tiles[y][x]
         if self.start is None and tile != self.finish:
             self.start = tile
@@ -67,7 +67,7 @@ class Pathfinder:
             self.finish = tile
             self.finish.state = "finish"
 
-    def _handle_mb2(self, x, y):
+    def _handle_rmb(self, x, y):
         tile = self.board.tiles[y][x]
         if tile == self.start:
             self.start = None
