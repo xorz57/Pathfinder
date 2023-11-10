@@ -1,6 +1,5 @@
 import pygame
 
-
 from config import TILE_WIDTH, TILE_HEIGHT
 
 

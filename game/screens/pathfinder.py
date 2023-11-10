@@ -1,7 +1,6 @@
 import pygame
 import threading
 
-
 from config import BOARD_ROWS, BOARD_COLS, TILE_WIDTH, TILE_HEIGHT
 from algorithm import astar, bfs, dfs
 from entities.board import Board
