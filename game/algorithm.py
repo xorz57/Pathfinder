@@ -16,7 +16,7 @@ def _reconstruct_path(current):
     return path
 
 
-def astar(start, finish, delay=0.025):
+def astar(start, finish, delay=0.001):
     start.g = 0
     start.f = 0 + _heuristic(start, finish)
     frontier = []
@@ -47,7 +47,7 @@ def astar(start, finish, delay=0.025):
     return False
 
 
-def bfs(start, finish, delay=0.025):
+def bfs(start, finish, delay=0.001):
     frontier = collections.deque()
     frontier.append(start)
     start.visited = True
@@ -73,7 +73,7 @@ def bfs(start, finish, delay=0.025):
     return False
 
 
-def dfs(start, finish, delay=0.025):
+def dfs(start, finish, delay=0.001):
     frontier = collections.deque()
     frontier.append(start)
     start.visited = True
