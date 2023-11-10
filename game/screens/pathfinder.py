@@ -30,17 +30,17 @@ class Pathfinder:
                         t.start()
 
     def update(self):
-        if pygame.mouse.get_pressed()[0]:
+        if pygame.mouse.get_pressed()[0] or pygame.key.get_pressed()[pygame.K_1]:
             x, y = pygame.mouse.get_pos()
             x = max(0, min(BOARD_COLS - 1, x // TILE_WIDTH))
             y = max(0, min(BOARD_ROWS - 1, y // TILE_HEIGHT))
             self._handle_lmb(x, y)
-        if pygame.mouse.get_pressed()[1]:
+        if pygame.mouse.get_pressed()[1] or pygame.key.get_pressed()[pygame.K_2]:
             x, y = pygame.mouse.get_pos()
             x = max(0, min(BOARD_COLS - 1, x // TILE_WIDTH))
             y = max(0, min(BOARD_ROWS - 1, y // TILE_HEIGHT))
             self._handle_mmb(x, y)
-        if pygame.mouse.get_pressed()[2]:
+        if pygame.mouse.get_pressed()[2] or pygame.key.get_pressed()[pygame.K_3]:
             x, y = pygame.mouse.get_pos()
             x = max(0, min(BOARD_COLS - 1, x // TILE_WIDTH))
             y = max(0, min(BOARD_ROWS - 1, y // TILE_HEIGHT))
