@@ -1,7 +1,7 @@
 import pygame
 
 from config import WINDOW_W, WINDOW_H, WINDOW_TITLE
-from screens.pathfinder import Pathfinder
+from screens.pathfinder_screen import PathfinderScreen
 
 pygame.init()
 screen = pygame.display.set_mode((WINDOW_W, WINDOW_H))
@@ -10,7 +10,7 @@ pygame.display.set_caption(WINDOW_TITLE)
 clock = pygame.time.Clock()
 running = True
 
-current_screen = Pathfinder()
+current_screen = PathfinderScreen()
 
 while running:
     for event in pygame.event.get():

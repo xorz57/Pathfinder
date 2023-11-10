@@ -7,7 +7,7 @@ from entities.board import Board
 from entities.grid import Grid
 
 
-class Pathfinder:
+class PathfinderScreen:
     def __init__(self):
         self.board = Board(BOARD_ROWS, BOARD_COLS)
         self.grid = Grid(BOARD_ROWS, BOARD_COLS)
