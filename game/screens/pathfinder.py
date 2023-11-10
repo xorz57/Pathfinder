@@ -32,18 +32,12 @@ class Pathfinder:
     def update(self):
         if pygame.mouse.get_pressed()[0] or pygame.key.get_pressed()[pygame.K_1]:
             x, y = pygame.mouse.get_pos()
-            x = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
-            y = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
             self._handle_lmb(x, y)
         if pygame.mouse.get_pressed()[1] or pygame.key.get_pressed()[pygame.K_2]:
             x, y = pygame.mouse.get_pos()
-            x = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
-            y = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
             self._handle_mmb(x, y)
         if pygame.mouse.get_pressed()[2] or pygame.key.get_pressed()[pygame.K_3]:
             x, y = pygame.mouse.get_pos()
-            x = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
-            y = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
             self._handle_rmb(x, y)
 
     def render(self, screen):
@@ -54,7 +48,9 @@ class Pathfinder:
         return max(minimum, min(maximum, value))
 
     def _handle_lmb(self, x, y):
-        tile = self.board.tiles[y][x]
+        row = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
+        col = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
+        tile = self.board.tiles[row][col]
         match tile.state:
             case "empty":
                 tile.state = "wall"
@@ -66,7 +62,9 @@ class Pathfinder:
                 tile.state = "wall"
 
     def _handle_mmb(self, x, y):
-        tile = self.board.tiles[y][x]
+        row = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
+        col = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
+        tile = self.board.tiles[row][col]
         if tile.state != "finish" and self.start is None:
             self.start = tile
             self.start.state = "start"
@@ -75,7 +73,9 @@ class Pathfinder:
             self.finish.state = "finish"
 
     def _handle_rmb(self, x, y):
-        tile = self.board.tiles[y][x]
+        row = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
+        col = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
+        tile = self.board.tiles[row][col]
         match tile.state:
             case "wall":
                 tile.state = "empty"
