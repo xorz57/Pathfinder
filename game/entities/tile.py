@@ -1,7 +1,7 @@
 import math
 import pygame
 
-from config import TILE_WIDTH, TILE_HEIGHT
+from config import TILE_W, TILE_H
 
 class Tile:
     def __init__(self, x, y):
@@ -18,7 +18,7 @@ class Tile:
         return self.f < getattr(other, "f", other)
 
     def draw(self, surface):
-        rect = (self.x * TILE_WIDTH, self.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT)
+        rect = (self.x * TILE_W, self.y * TILE_H, TILE_W, TILE_H)
         match self.state:
             case "empty":
                 pygame.draw.rect(surface, (238, 238, 238), rect)

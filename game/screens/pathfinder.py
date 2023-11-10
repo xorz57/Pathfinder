@@ -1,7 +1,7 @@
 import pygame
 import threading
 
-from config import BOARD_ROWS, BOARD_COLS, TILE_WIDTH, TILE_HEIGHT
+from config import BOARD_ROWS, BOARD_COLS, TILE_W, TILE_H
 from algorithm import astar, bfs, dfs
 from entities.board import Board
 from entities.grid import Grid
@@ -32,23 +32,26 @@ class Pathfinder:
     def update(self):
         if pygame.mouse.get_pressed()[0] or pygame.key.get_pressed()[pygame.K_1]:
             x, y = pygame.mouse.get_pos()
-            x = max(0, min(BOARD_COLS - 1, x // TILE_WIDTH))
-            y = max(0, min(BOARD_ROWS - 1, y // TILE_HEIGHT))
+            x = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
+            y = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
             self._handle_lmb(x, y)
         if pygame.mouse.get_pressed()[1] or pygame.key.get_pressed()[pygame.K_2]:
             x, y = pygame.mouse.get_pos()
-            x = max(0, min(BOARD_COLS - 1, x // TILE_WIDTH))
-            y = max(0, min(BOARD_ROWS - 1, y // TILE_HEIGHT))
+            x = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
+            y = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
             self._handle_mmb(x, y)
         if pygame.mouse.get_pressed()[2] or pygame.key.get_pressed()[pygame.K_3]:
             x, y = pygame.mouse.get_pos()
-            x = max(0, min(BOARD_COLS - 1, x // TILE_WIDTH))
-            y = max(0, min(BOARD_ROWS - 1, y // TILE_HEIGHT))
+            x = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
+            y = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
             self._handle_rmb(x, y)
 
     def render(self, screen):
         self.board.draw(screen)
         self.grid.draw(screen)
+
+    def _clamp(self, value, minimum, maximum):
+        return max(minimum, min(maximum, value))
 
     def _handle_lmb(self, x, y):
         tile = self.board.tiles[y][x]
