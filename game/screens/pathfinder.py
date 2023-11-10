@@ -53,25 +53,33 @@ class Pathfinder:
 
     def _handle_lmb(self, x, y):
         tile = self.board.tiles[y][x]
-        if tile == self.start:
-            self.start = None
-        if tile == self.finish:
-            self.finish = None
-        tile.state = "wall"
+        match tile.state:
+            case "empty":
+                tile.state = "wall"
+            case "start":
+                self.start = None
+                tile.state = "wall"
+            case "finish":
+                self.finish = None
+                tile.state = "wall"
 
     def _handle_mmb(self, x, y):
         tile = self.board.tiles[y][x]
-        if self.start is None and tile != self.finish:
+        if tile.state != "finish" and self.start is None:
             self.start = tile
             self.start.state = "start"
-        if self.finish is None and tile != self.start:
+        if tile.state != "start" and self.finish is None:
             self.finish = tile
             self.finish.state = "finish"
 
     def _handle_rmb(self, x, y):
         tile = self.board.tiles[y][x]
-        if tile == self.start:
-            self.start = None
-        if tile == self.finish:
-            self.finish = None
-        tile.state = "empty"
+        match tile.state:
+            case "wall":
+                tile.state = "empty"
+            case "start":
+                self.start = None
+                tile.state = "empty"
+            case "finish":
+                self.finish = None
+                tile.state = "empty"
