@@ -18,7 +18,7 @@ def _reconstruct_path(current):
 
 def astar(start, finish, delay=0.001):
     start.g = 0
-    start.f = 0 + _heuristic(start, finish)
+    start.f = start.g + _heuristic(start, finish)
     frontier = []
     heapq.heappush(frontier, (start.f, start))
     while frontier:
@@ -38,7 +38,7 @@ def astar(start, finish, delay=0.001):
                 if neighbor != start and neighbor != finish:
                     neighbor.state = "frontier"
                 neighbor.g = g
-                neighbor.f = g + _heuristic(neighbor, finish)
+                neighbor.f = neighbor.g + _heuristic(neighbor, finish)
                 neighbor.visited = True
                 neighbor.parent = current
                 heapq.heappush(frontier, (neighbor.f, neighbor))
