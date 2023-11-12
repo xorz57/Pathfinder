@@ -4,13 +4,11 @@ import threading
 from config import BOARD_ROWS, BOARD_COLS, TILE_W, TILE_H
 from algorithm import astar, bfs, dfs
 from entities.board import Board
-from entities.grid import Grid
 
 
 class PathfinderScreen:
     def __init__(self):
         self.board = Board(BOARD_ROWS, BOARD_COLS)
-        self.grid = Grid(BOARD_ROWS, BOARD_COLS)
         self.start = None
         self.finish = None
 
@@ -42,7 +40,6 @@ class PathfinderScreen:
 
     def render(self, screen):
         self.board.draw(screen)
-        self.grid.draw(screen)
 
     def _clamp(self, value, minimum, maximum):
         return max(minimum, min(maximum, value))
