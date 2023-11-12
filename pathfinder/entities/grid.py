@@ -1,13 +1,16 @@
-from entities.tile import Tile
+import numpy as np
 
+from entities.tile import Tile
 
 class Grid:
     def __init__(self, rows, cols):
         self.rows = rows
         self.cols = cols
-        self.tiles = [
-            [Tile(row, col) for row in range(self.cols)] for col in range(self.rows)
-        ]
+        self.tiles = np.empty((self.rows, self.cols), dtype=object)
+
+        for row in range(self.rows):
+            for col in range(self.cols):
+                self.tiles[row][col] = Tile(row, col)
 
         neighbor_offsets = [
             (+0, -1),

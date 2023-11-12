@@ -44,7 +44,7 @@ class PathfinderScreen:
         for row in range(self.grid.rows):
             for col in range(self.grid.cols):
                 tile = self.grid.tiles[row][col]
-                rect = (tile.row * TILE_W, tile.col * TILE_H, TILE_W, TILE_H)
+                rect = (tile.col * TILE_W, tile.row * TILE_H, TILE_W, TILE_H)
                 match tile.state:
                     case "empty":
                         pygame.draw.rect(screen, (238, 238, 238), rect)
