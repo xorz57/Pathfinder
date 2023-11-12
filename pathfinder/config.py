@@ -1,10 +1,10 @@
 # Tile settings
-TILE_W = 10
-TILE_H = 10
+TILE_W = 20
+TILE_H = 20
 
 # Grid settings
-GRID_ROWS = 80
-GRID_COLS = 80
+GRID_ROWS = 40
+GRID_COLS = 40
 
 # Window settings
 WINDOW_W = GRID_COLS * TILE_W
