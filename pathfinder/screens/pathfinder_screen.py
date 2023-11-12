@@ -9,6 +9,7 @@ from entities.grid import Grid
 class PathfinderScreen:
     def __init__(self):
         self.grid = Grid(GRID_ROWS, GRID_COLS)
+        self.algorithm = astar
         self.start = None
         self.finish = None
 
@@ -22,7 +23,7 @@ class PathfinderScreen:
                 case pygame.K_SPACE:
                     if self.start != None and self.finish != None:
                         t = threading.Thread(
-                            target=astar, args=(self.start, self.finish)
+                            target=self.algorithm, args=(self.start, self.finish)
                         )
                         t.daemon = True
                         t.start()
