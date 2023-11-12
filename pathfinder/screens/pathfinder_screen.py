@@ -3,12 +3,12 @@ import threading
 
 from config import BOARD_ROWS, BOARD_COLS, TILE_W, TILE_H
 from algorithm import astar, bfs, dfs
-from entities.board import Board
+from entities.grid import Grid
 
 
 class PathfinderScreen:
     def __init__(self):
-        self.board = Board(BOARD_ROWS, BOARD_COLS)
+        self.grid = Grid(BOARD_ROWS, BOARD_COLS)
         self.start = None
         self.finish = None
 
@@ -16,7 +16,7 @@ class PathfinderScreen:
         if event.type == pygame.KEYDOWN:
             match event.key:
                 case pygame.K_ESCAPE:
-                    self.board = Board(BOARD_ROWS, BOARD_COLS)
+                    self.grid = Grid(BOARD_ROWS, BOARD_COLS)
                     self.start = None
                     self.finish = None
                 case pygame.K_SPACE:
@@ -39,7 +39,7 @@ class PathfinderScreen:
             self._handle_rmb(x, y)
 
     def render(self, screen):
-        self.board.draw(screen)
+        self.grid.draw(screen)
 
     def _clamp(self, value, minimum, maximum):
         return max(minimum, min(maximum, value))
@@ -47,7 +47,7 @@ class PathfinderScreen:
     def _handle_lmb(self, x, y):
         row = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
         col = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
-        tile = self.board.tiles[row][col]
+        tile = self.grid.tiles[row][col]
         match tile.state:
             case "empty":
                 tile.state = "wall"
@@ -61,7 +61,7 @@ class PathfinderScreen:
     def _handle_mmb(self, x, y):
         row = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
         col = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
-        tile = self.board.tiles[row][col]
+        tile = self.grid.tiles[row][col]
         if tile.state != "finish" and self.start is None:
             self.start = tile
             self.start.state = "start"
@@ -72,7 +72,7 @@ class PathfinderScreen:
     def _handle_rmb(self, x, y):
         row = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
         col = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
-        tile = self.board.tiles[row][col]
+        tile = self.grid.tiles[row][col]
         match tile.state:
             case "wall":
                 tile.state = "empty"

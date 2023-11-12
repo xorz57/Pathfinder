@@ -2,7 +2,7 @@
 TILE_W = 5
 TILE_H = 5
 
-# Board settings
+# Grid settings
 BOARD_ROWS = 160
 BOARD_COLS = 160
 

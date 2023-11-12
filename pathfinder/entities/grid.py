@@ -3,7 +3,7 @@ import pygame
 from config import TILE_W, TILE_H
 from entities.tile import Tile
 
-class Board:
+class Grid:
     def __init__(self, rows, cols):
         self.rows = rows
         self.cols = cols
