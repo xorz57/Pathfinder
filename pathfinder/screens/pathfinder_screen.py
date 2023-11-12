@@ -30,14 +30,11 @@ class PathfinderScreen:
 
     def update(self):
         if pygame.mouse.get_pressed()[0] or pygame.key.get_pressed()[pygame.K_1]:
-            x, y = pygame.mouse.get_pos()
-            self._handle_lmb(x, y)
+            self._handle_lmb()
         if pygame.mouse.get_pressed()[1] or pygame.key.get_pressed()[pygame.K_2]:
-            x, y = pygame.mouse.get_pos()
-            self._handle_mmb(x, y)
+            self._handle_mmb()
         if pygame.mouse.get_pressed()[2] or pygame.key.get_pressed()[pygame.K_3]:
-            x, y = pygame.mouse.get_pos()
-            self._handle_rmb(x, y)
+            self._handle_rmb()
 
     def render(self, screen):
         # Draw tiles
@@ -78,7 +75,8 @@ class PathfinderScreen:
     def _clamp(self, value, minimum, maximum):
         return max(minimum, min(maximum, value))
 
-    def _handle_lmb(self, x, y):
+    def _handle_lmb(self):
+        x, y = pygame.mouse.get_pos()
         row = self._clamp(y // TILE_H, 0, GRID_ROWS - 1)
         col = self._clamp(x // TILE_W, 0, GRID_COLS - 1)
         tile = self.grid.tiles[row][col]
@@ -92,7 +90,8 @@ class PathfinderScreen:
                 self.finish = None
                 tile.state = "wall"
 
-    def _handle_mmb(self, x, y):
+    def _handle_mmb(self):
+        x, y = pygame.mouse.get_pos()
         row = self._clamp(y // TILE_H, 0, GRID_ROWS - 1)
         col = self._clamp(x // TILE_W, 0, GRID_COLS - 1)
         tile = self.grid.tiles[row][col]
@@ -103,7 +102,8 @@ class PathfinderScreen:
             self.finish = tile
             self.finish.state = "finish"
 
-    def _handle_rmb(self, x, y):
+    def _handle_rmb(self):
+        x, y = pygame.mouse.get_pos()
         row = self._clamp(y // TILE_H, 0, GRID_ROWS - 1)
         col = self._clamp(x // TILE_W, 0, GRID_COLS - 1)
         tile = self.grid.tiles[row][col]
