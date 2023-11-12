@@ -39,10 +39,11 @@ class PathfinderScreen:
             self._handle_rmb(x, y)
 
     def render(self, screen):
+        # Draw tiles
         for row in range(self.grid.rows):
             for col in range(self.grid.cols):
                 tile = self.grid.tiles[row][col]
-                rect = (tile.x * TILE_W, tile.y * TILE_H, TILE_W, TILE_H)
+                rect = (tile.row * TILE_W, tile.col * TILE_H, TILE_W, TILE_H)
                 match tile.state:
                     case "empty":
                         pygame.draw.rect(screen, (238, 238, 238), rect)
@@ -58,14 +59,20 @@ class PathfinderScreen:
                         pygame.draw.rect(screen, (33, 85, 205), rect)
                     case "finish":
                         pygame.draw.rect(screen, (33, 85, 205), rect)
+                    case _:
+                        pygame.draw.rect(screen, (221, 17, 85), rect)
+        # Draw horizontal lines
         for row in range(self.grid.rows):
-            spy = (0, row * TILE_H)
-            epy = (self.grid.cols * TILE_W, row * TILE_H)
-            pygame.draw.line(screen, (82, 82, 82), spy, epy)
+            color = (82, 82, 82)
+            start_pos = (0, row * TILE_H)
+            end_pos = (self.grid.cols * TILE_W, row * TILE_H)
+            pygame.draw.line(screen, color, start_pos, end_pos)
+        # Draw vertical lines
         for col in range(self.grid.cols):
-            spx = (col * TILE_W, 0)
-            epx = (col * TILE_W, self.grid.rows * TILE_H)
-            pygame.draw.line(screen, (82, 82, 82), spx, epx)
+            color = (82, 82, 82)
+            start_pos = (col * TILE_W, 0)
+            end_pos = (col * TILE_W, self.grid.rows * TILE_H)
+            pygame.draw.line(screen, color, start_pos, end_pos)
 
     def _clamp(self, value, minimum, maximum):
         return max(minimum, min(maximum, value))

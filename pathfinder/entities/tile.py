@@ -2,9 +2,9 @@ import math
 
 
 class Tile:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+    def __init__(self, row, col):
+        self.row = row
+        self.col = col
         self.f = math.inf
         self.g = math.inf
         self.neighbors = []

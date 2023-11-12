@@ -5,7 +5,7 @@ import time
 
 
 def _heuristic(a, b):
-    return math.pow(a.x - b.x, 2) + math.pow(a.y - b.y, 2)
+    return math.pow(a.row - b.row, 2) + math.pow(a.col - b.col, 2)
 
 
 def _reconstruct_path(current):
