@@ -25,13 +25,14 @@ def astar(start, finish, delay=0.001):
         time.sleep(delay)
         current = heapq.heappop(frontier)[1]
         if current == finish:
+            current.state = "path"
             path = _reconstruct_path(current)
             for tile in path:
                 if tile is not None and tile != start:
                     tile.state = "path"
             return True
         for neighbor in current.neighbors:
-            if neighbor.visited or neighbor.state == "wall":
+            if neighbor.state == "visited" or neighbor.state == "wall":
                 continue
             g = current.g + 1
             if g < neighbor.g:
@@ -39,7 +40,7 @@ def astar(start, finish, delay=0.001):
                     neighbor.state = "frontier"
                 neighbor.g = g
                 neighbor.f = neighbor.g + _heuristic(neighbor, finish)
-                neighbor.visited = True
+                neighbor.state = "visited"
                 neighbor.parent = current
                 heapq.heappush(frontier, (neighbor.f, neighbor))
         if current != start and current != finish:
@@ -50,21 +51,22 @@ def astar(start, finish, delay=0.001):
 def bfs(start, finish, delay=0.001):
     frontier = collections.deque()
     frontier.append(start)
-    start.visited = True
+    start.state = "visited"
     while frontier:
         time.sleep(delay)
         current = frontier.popleft()
         if current == finish:
+            current.state = "path"
             path = _reconstruct_path(current)
             for tile in path:
                 if tile is not None and tile != start:
                     tile.state = "path"
             return True
         for neighbor in current.neighbors:
-            if neighbor.visited or neighbor.state == "wall":
+            if neighbor.state == "visited" or neighbor.state == "wall":
                 continue
             frontier.append(neighbor)
-            neighbor.visited = True
+            neighbor.state = "visited"
             neighbor.parent = current
             if neighbor != start and neighbor != finish:
                 neighbor.state = "frontier"
@@ -76,21 +78,22 @@ def bfs(start, finish, delay=0.001):
 def dfs(start, finish, delay=0.001):
     frontier = collections.deque()
     frontier.append(start)
-    start.visited = True
+    start.state = "visited"
     while frontier:
         time.sleep(delay)
         current = frontier.pop()
         if current == finish:
+            current.state = "path"
             path = _reconstruct_path(current)
             for tile in path:
                 if tile is not None and tile != start:
                     tile.state = "path"
             return True
         for neighbor in current.neighbors:
-            if neighbor.visited or neighbor.state == "wall":
+            if neighbor.state == "visited" or neighbor.state == "wall":
                 continue
             frontier.append(neighbor)
-            neighbor.visited = True
+            neighbor.state = "visited"
             neighbor.parent = current
             if neighbor != start and neighbor != finish:
                 neighbor.state = "frontier"

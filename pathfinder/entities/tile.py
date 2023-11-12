@@ -8,7 +8,6 @@ class Tile:
         self.f = math.inf
         self.g = math.inf
         self.neighbors = []
-        self.visited = False
         self.parent = None
         self.state = "empty"
 
