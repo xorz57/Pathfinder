@@ -1,14 +1,14 @@
 import pygame
 import threading
 
-from config import BOARD_ROWS, BOARD_COLS, TILE_W, TILE_H
 from algorithm import astar, bfs, dfs
+from config import GRID_ROWS, GRID_COLS, TILE_W, TILE_H
 from entities.grid import Grid
 
 
 class PathfinderScreen:
     def __init__(self):
-        self.grid = Grid(BOARD_ROWS, BOARD_COLS)
+        self.grid = Grid(GRID_ROWS, GRID_COLS)
         self.start = None
         self.finish = None
 
@@ -16,7 +16,7 @@ class PathfinderScreen:
         if event.type == pygame.KEYDOWN:
             match event.key:
                 case pygame.K_ESCAPE:
-                    self.grid = Grid(BOARD_ROWS, BOARD_COLS)
+                    self.grid = Grid(GRID_ROWS, GRID_COLS)
                     self.start = None
                     self.finish = None
                 case pygame.K_SPACE:
@@ -39,14 +39,40 @@ class PathfinderScreen:
             self._handle_rmb(x, y)
 
     def render(self, screen):
-        self.grid.draw(screen)
+        for row in range(self.grid.rows):
+            for col in range(self.grid.cols):
+                tile = self.grid.tiles[row][col]
+                rect = (tile.x * TILE_W, tile.y * TILE_H, TILE_W, TILE_H)
+                match tile.state:
+                    case "empty":
+                        pygame.draw.rect(screen, (238, 238, 238), rect)
+                    case "wall":
+                        pygame.draw.rect(screen, (49, 49, 49), rect)
+                    case "path":
+                        pygame.draw.rect(screen, (33, 85, 205), rect)
+                    case "visited":
+                        pygame.draw.rect(screen, (10, 161, 221), rect)
+                    case "frontier":
+                        pygame.draw.rect(screen, (121, 218, 232), rect)
+                    case "start":
+                        pygame.draw.rect(screen, (33, 85, 205), rect)
+                    case "finish":
+                        pygame.draw.rect(screen, (33, 85, 205), rect)
+        for row in range(self.grid.rows):
+            spy = (0, row * TILE_H)
+            epy = (self.grid.cols * TILE_W, row * TILE_H)
+            pygame.draw.line(screen, (82, 82, 82), spy, epy)
+        for col in range(self.grid.cols):
+            spx = (col * TILE_W, 0)
+            epx = (col * TILE_W, self.grid.rows * TILE_H)
+            pygame.draw.line(screen, (82, 82, 82), spx, epx)
 
     def _clamp(self, value, minimum, maximum):
         return max(minimum, min(maximum, value))
 
     def _handle_lmb(self, x, y):
-        row = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
-        col = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
+        row = self._clamp(y // TILE_H, 0, GRID_ROWS - 1)
+        col = self._clamp(x // TILE_W, 0, GRID_COLS - 1)
         tile = self.grid.tiles[row][col]
         match tile.state:
             case "empty":
@@ -59,8 +85,8 @@ class PathfinderScreen:
                 tile.state = "wall"
 
     def _handle_mmb(self, x, y):
-        row = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
-        col = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
+        row = self._clamp(y // TILE_H, 0, GRID_ROWS - 1)
+        col = self._clamp(x // TILE_W, 0, GRID_COLS - 1)
         tile = self.grid.tiles[row][col]
         if tile.state != "finish" and self.start is None:
             self.start = tile
@@ -70,8 +96,8 @@ class PathfinderScreen:
             self.finish.state = "finish"
 
     def _handle_rmb(self, x, y):
-        row = self._clamp(y // TILE_H, 0, BOARD_ROWS - 1)
-        col = self._clamp(x // TILE_W, 0, BOARD_COLS - 1)
+        row = self._clamp(y // TILE_H, 0, GRID_ROWS - 1)
+        col = self._clamp(x // TILE_W, 0, GRID_COLS - 1)
         tile = self.grid.tiles[row][col]
         match tile.state:
             case "wall":
