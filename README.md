@@ -1,4 +1,5 @@
 # Pathfinder
+
 Pathfinder written in Python
 
 ## Usage
