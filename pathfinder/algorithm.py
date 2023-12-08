@@ -1,11 +1,14 @@
 import collections
 import heapq
-import math
 import time
 
 
+def _manhattan_distance(a, b):
+    return abs(a.row - b.row) + abs(a.col - b.col)
+
+
 def _heuristic(a, b):
-    return math.pow(a.row - b.row, 2) + math.pow(a.col - b.col, 2)
+    return (1 + 0.001) * _manhattan_distance(a, b)
 
 
 def _reconstruct_path(current):
@@ -18,7 +21,7 @@ def _reconstruct_path(current):
 
 def astar(start, finish, delay=0.001):
     start.g = 0
-    start.f = start.g + _heuristic(start, finish)
+    start.f = _heuristic(start, finish)
     frontier = []
     heapq.heappush(frontier, (start.f, start))
     while frontier:
@@ -34,12 +37,12 @@ def astar(start, finish, delay=0.001):
         for neighbor in current.neighbors:
             if neighbor.state == "visited" or neighbor.state == "wall":
                 continue
-            g = current.g + 1
+            g = current.g + _manhattan_distance(current, neighbor)
             if g < neighbor.g:
                 if neighbor != start and neighbor != finish:
                     neighbor.state = "frontier"
                 neighbor.g = g
-                neighbor.f = neighbor.g + _heuristic(neighbor, finish)
+                neighbor.f = g + _heuristic(neighbor, finish)
                 neighbor.state = "visited"
                 neighbor.parent = current
                 heapq.heappush(frontier, (neighbor.f, neighbor))

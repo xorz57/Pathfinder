@@ -13,10 +13,10 @@ class Grid:
                 self.tiles[row][col] = Tile(row, col)
 
         neighbor_offsets = [
-            (+0, -1),
-            (+1, +0),
-            (+0, +1),
             (-1, +0),
+            (+1, +0),
+            (+0, -1),
+            (+0, +1),
         ]
 
         for row in range(self.rows):
