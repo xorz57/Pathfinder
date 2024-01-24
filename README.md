@@ -2,8 +2,6 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Pathfinder written in Python
-
 ## Usage
 
 ```bash
