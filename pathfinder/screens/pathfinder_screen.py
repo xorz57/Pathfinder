@@ -27,6 +27,36 @@ class PathfinderScreen:
                         )
                         t.daemon = True
                         t.start()
+                case pygame.K_w:
+                    x, y = pygame.mouse.get_pos()
+                    row = self._clamp(y // TILE_H, 0, GRID_ROWS - 1)
+                    col = self._clamp(x // TILE_W, 0, GRID_COLS - 1)
+                    tile = self.grid.tiles[row][col]
+                    tile.state = "wall"
+                case pygame.K_s:
+                    x, y = pygame.mouse.get_pos()
+                    row = self._clamp(y // TILE_H, 0, GRID_ROWS - 1)
+                    col = self._clamp(x // TILE_W, 0, GRID_COLS - 1)
+                    tile = self.grid.tiles[row][col]
+                    if self.start is not None:
+                        self.start.state = "empty"
+                    self.start = tile
+                    tile.state = "start"
+                case pygame.K_f:
+                    x, y = pygame.mouse.get_pos()
+                    row = self._clamp(y // TILE_H, 0, GRID_ROWS - 1)
+                    col = self._clamp(x // TILE_W, 0, GRID_COLS - 1)
+                    tile = self.grid.tiles[row][col]
+                    if self.finish is not None:
+                        self.finish.state = "empty"
+                    self.finish = tile
+                    tile.state = "finish"
+                case pygame.K_e:
+                    x, y = pygame.mouse.get_pos()
+                    row = self._clamp(y // TILE_H, 0, GRID_ROWS - 1)
+                    col = self._clamp(x // TILE_W, 0, GRID_COLS - 1)
+                    tile = self.grid.tiles[row][col]
+                    tile.state = "empty"
 
     def update(self):
         if pygame.mouse.get_pressed()[0] or pygame.key.get_pressed()[pygame.K_1]:
